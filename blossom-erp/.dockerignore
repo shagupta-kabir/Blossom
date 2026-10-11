@@ -1,0 +1,9 @@
+target
+.git
+.github
+.idea
+*.iml
+docs
+README.md
+local.yml
+local.yml.example

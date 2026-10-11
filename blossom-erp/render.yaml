@@ -1,0 +1,24 @@
+# Render Blueprint: New + -> Blueprint -> pick your repo.
+services:
+  - type: web
+    name: blossom-erp
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: MONGODB_URI
+        sync: false            # you paste your MongoDB Atlas connection string in the Render dashboard
+      - key: JWT_SECRET
+        generateValue: true    # Render generates a strong random secret
+      - key: SEED_DEMO_DATA
+        value: "true"          # loads demo users/data on first start. Set to "false" for real use.
+      # RESET_DEMO_DATA: "true"   # optional, one-time: wipes the DB and reloads the Bangladeshi demo data
+      - key: DEMO_PASSWORD
+        value: "demo1234"    # password for the demo accounts; change it
+      - key: SIGNUP_ENABLED
+        value: "true"          # public sign-up (creates EMPLOYEE accounts only)
+      - key: SIGNUP_AUTO_APPROVE
+        value: "true"          # "false" = an admin must enable new accounts on the Users tab
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"

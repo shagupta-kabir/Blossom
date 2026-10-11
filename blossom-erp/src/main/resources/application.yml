@@ -1,0 +1,50 @@
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+  forward-headers-strategy: framework   # Render terminates TLS in front of the container
+
+spring:
+  config:
+    # your private settings for running on your own computer (see local.yml.example); first file found wins per property
+    import: optional:file:./local.yml,optional:file:./blossom-erp/local.yml
+  application:
+    name: blossom-erp
+  data:
+    mongodb:
+
+      uri: mongodb+srv://user:0xTj0jlgAZWrdUe7@cluster0.qdc60sh.mongodb.net/blossom_erp?retryWrites=true&w=majority
+      database: ${MONGODB_DATABASE:blossom_erp}
+      auto-index-creation: true
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+app:
+  currency: BDT                                   # all money amounts are whole Bangladeshi Taka (Tk)
+  jwt:
+    secret: ${JWT_SECRET:}                          # required, >= 32 characters
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:480}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
+  seed:
+    demo-data: ${SEED_DEMO_DATA:false}
+    reset: ${RESET_DEMO_DATA:false}              # DESTRUCTIVE: wipes all data before seeding, use once then remove
+    demo-password: ${DEMO_PASSWORD:Demo@12345}
+    admin-email: ${ADMIN_EMAIL:}
+    admin-password: ${ADMIN_PASSWORD:}
+    admin-name: ${ADMIN_NAME:System Administrator}
+
+logging:
+  level:
+    root: INFO
+    io.blossom: INFO

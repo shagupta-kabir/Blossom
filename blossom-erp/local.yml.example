@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------
+# LOCAL RUN SETTINGS  (only for running on your own computer)
+#
+# 1. Copy this file and name the copy:  local.yml   (same folder as pom.xml)
+# 2. Replace USERNAME and PASSWORD below with your MongoDB Atlas user.
+#    If the password has symbols, write them as %-codes: @ -> %40  # -> %23  / -> %2F  : -> %3A
+# 3. Run the app. Nothing else to set.
+#
+# NEVER upload local.yml to GitHub (it is git-ignored and docker-ignored already).
+# On Render you do NOT use this file: you set MONGODB_URI and JWT_SECRET there instead.
+# ---------------------------------------------------------------
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://USERNAME:PASSWORD@cluster0.qdc60sh.mongodb.net/blossom_erp?retryWrites=true&w=majority&appName=Cluster0
+app:
+  jwt:
+    secret: local-only-secret-change-me-0123456789abcdef
+  seed:
+    demo-data: true

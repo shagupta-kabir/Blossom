@@ -1,0 +1,16 @@
+# Local run without Atlas:  docker compose up --build   ->  http://localhost:8080
+services:
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: [mongo-data:/data/db]
+  app:
+    build: .
+    ports: ["8080:8080"]
+    depends_on: [mongo]
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/blossom_erp
+      JWT_SECRET: local-dev-secret-change-me-at-least-32-chars
+      SEED_DEMO_DATA: "true"
+volumes:
+  mongo-data:
